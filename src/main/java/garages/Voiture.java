@@ -66,8 +66,11 @@ public class Voiture {
 	 * @return l'ensemble des garages visités par cette voiture
 	 */
 	public Set<Garage> garagesVisites() {
-		// TODO: Implémenter cette méthode
-		return new HashSet<>();
+		Set<Garage> garagesvisite = new HashSet<>();
+		for(Stationnement s : myStationnements) {
+			garagesvisite.add(s.getGarageVisite());
+		}
+		return garagesvisite;
 	}
 
 	/**
