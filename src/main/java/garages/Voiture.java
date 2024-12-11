@@ -30,10 +30,17 @@ public class Voiture {
 	 * @throws IllegalStateException Si déjà dans un garage
 	 */
 	public void entreAuGarage(Garage g) throws IllegalStateException {
-		// Et si la voiture est déjà dans un garage ?
 
-		Stationnement s = new Stationnement(this, g);
-		myStationnements.add(s);
+		if(myStationnements.isEmpty() || !myStationnements.getLast().estEnCours() ){
+			Stationnement s = new Stationnement(this, g);
+			myStationnements.add(s);
+
+		}
+		else{
+			throw new IllegalStateException();
+		}
+
+
 	}
 
 	/**
@@ -43,10 +50,14 @@ public class Voiture {
 	 * @throws IllegalStateException si la voiture n'est pas dans un garage
 	 */
 	public void sortDuGarage() throws IllegalStateException {
-		throw new UnsupportedOperationException("Pas encore implémenté");
-		// TODO: Implémenter cette méthode
-		// Trouver le dernier stationnement de la voiture
-		// Terminer ce stationnement
+		Stationnement dernier= myStationnements.getLast();
+		if(dernier.estEnCours()) {
+			dernier.terminer();
+		}
+		else{
+			throw new IllegalStateException();
+		}
+
 	}
 
 	/**
@@ -56,7 +67,7 @@ public class Voiture {
 	 */
 	public Set<Garage> garagesVisites() {
 		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+		return new HashSet<>();
 	}
 
 	/**
@@ -65,9 +76,12 @@ public class Voiture {
 	 * @return vrai si la voiture est dans un garage, faux sinon
 	 */
 	public boolean estDansUnGarage() {
-		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
-		// Vrai si il y a des stationnements et le dernier stationnement est en cours
+		if(!this.myStationnements.isEmpty() && this.myStationnements.getLast().estEnCours()){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	/**
